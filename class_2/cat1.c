@@ -3,8 +3,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-int write_to(int fd_from)
-{
+int write_to(int fd_from) {
     char buf[514];
     ssize_t nread = 0;
 
@@ -22,11 +21,10 @@ int write_to(int fd_from)
     return 0;
 
     cleanup:
-        return -1;
+    return -1;
 }
 
-int show_file(char *file_name)
-{
+int show_file(char *file_name) {
     int fd = -1;
 
     if ((fd = open(file_name, O_RDONLY)) == -1) {
@@ -42,13 +40,12 @@ int show_file(char *file_name)
     return 0;
 
     cleanup:
-        if (fd != -1)
-            close(fd);
-        return -1;
+    if (fd != -1)
+        close(fd);
+    return -1;
 }
 
-int show_without_file()
-{
+int show_without_file() {
     if (write_to(STDIN_FILENO) == -1) {
         goto cleanup;
     }
@@ -56,11 +53,10 @@ int show_without_file()
     return 0;
 
     cleanup:
-        return -1;
+    return -1;
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 
     if (argc > 2) {
         fprintf(stderr, "Bad args!");
