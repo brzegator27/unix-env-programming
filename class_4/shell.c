@@ -55,14 +55,14 @@ void setupnewcommand(struct cmdlist *__cmd)
 }
 /* -------------------------------------------------------------------------------------- */
 
-int alloc_new_cmd(struct cmdlist *__cmd)
+int alloc_new_cmd(struct cmdlist **__cmd)
 {
-    if (__cmd != NULL) {
+    if (*__cmd != NULL) {
         return RESERROR;
     }
 
-    __cmd = malloc(sizeof(struct cmdlist));
-    setupnewcommand(__cmd);
+    *__cmd = malloc(sizeof(struct cmdlist));
+    setupnewcommand(*__cmd);
 
     return RESSUCCESS;
 }
@@ -131,13 +131,15 @@ int parsecmd(char *__buf, int __bufsize, struct cmdlist *__head)
     while ((word = strtok(cmd, " \t\n")) != NULL) {
         if (strcmp(word, "&&") == 0 || strcmp(word, "||") == 0) {
             setupparsedcommand(curr);
-            if (alloc_new_cmd(next) == RESERROR) {
+            if (alloc_new_cmd(&next) == RESERROR) {
                 printf("Error while setting new command struct.");
                 return RESERROR;
             }
             next->conjuction = strcmp(word, "&&") == 0 ? CONJAND : CONJOR;
             curr->next = next;
             curr = next;
+            next = NULL;
+            cmd = NULL;
             continue;
         }
 
