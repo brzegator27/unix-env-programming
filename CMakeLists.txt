@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.3)
 project(unix_env_programming)
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -pthread")
 
 add_executable(copy1 class_2/copy1.c)
 add_executable(cat1 class_2/cat1.c)
@@ -12,7 +12,7 @@ add_executable(tail class_2/tail.c)
 
 #################### class_4 ####################
 
-set(MY_SHELL_SOURCE_FILES class_4/shell.c class_4/funcs.h class_4/funcs.c)
+set(MY_SHELL_SOURCE_FILES class_4/shell/shell.c class_4/shell/funcs.h class_4/shell/funcs.c)
 add_executable(my_shell ${MY_SHELL_SOURCE_FILES})
 
 add_custom_command(
@@ -38,3 +38,20 @@ MESSAGE( STATUS "CMAKE_CURRENT_BINARY_DIR: " ${CMAKE_CURRENT_BINARY_DIR} )
 MESSAGE( STATUS "CMAKE_CURRENT_BINARY_DIR: " ${PROJECT_SOURCE_DIR} )
 
 #################### class_4 ####################
+
+#################### class_5 ####################
+
+add_executable(hello class_5/hello/hello.c)
+
+add_custom_command(
+        TARGET hello POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:hello> ${PROJECT_SOURCE_DIR}/Debug/class_5)
+
+add_custom_command(
+        TARGET hello POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:hello>)
+
+# -------------------
+
+
+#################### class_5 ####################
