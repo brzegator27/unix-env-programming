@@ -89,5 +89,15 @@ add_custom_command(
 
 # -------------------
 
+add_executable(sum class_5/sum/sum.c)
+
+add_custom_command(
+        TARGET sum POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:sum> ${PROJECT_SOURCE_DIR}/Debug/class_5)
+
+add_custom_command(
+        TARGET sum POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:sum>)
+
 
 #################### class_5 ####################
