@@ -65,5 +65,17 @@ add_custom_command(
 
 # -------------------
 
+add_executable(cond class_5/cond_var/cond.c)
+
+add_custom_command(
+        TARGET cond POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:cond> ${PROJECT_SOURCE_DIR}/Debug/class_5)
+
+add_custom_command(
+        TARGET cond POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:cond>)
+
+# -------------------
+
 
 #################### class_5 ####################
