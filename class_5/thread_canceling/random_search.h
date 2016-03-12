@@ -1,8 +1,12 @@
-//
-// Created by b27 on 12/03/16.
-//
+typedef struct
+{
+    int target;
+    int thread_idx;
+    int iterations_count;
+} thread_params;
 
-#ifndef UNIX_ENV_PROGRAMMING_RANDOM_SEARCH_H
-#define UNIX_ENV_PROGRAMMING_RANDOM_SEARCH_H
+void *search(void *arg);
 
-#endif //UNIX_ENV_PROGRAMMING_RANDOM_SEARCH_H
+void print_iterations_count(void *arg);
+
+void cancel_other_threads_than(int calling_th_idx);

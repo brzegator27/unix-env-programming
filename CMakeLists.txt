@@ -77,5 +77,17 @@ add_custom_command(
 
 # -------------------
 
+add_executable(rand_search class_5/thread_canceling/random_search.c)
+
+add_custom_command(
+        TARGET rand_search POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:rand_search> ${PROJECT_SOURCE_DIR}/Debug/class_5)
+
+add_custom_command(
+        TARGET rand_search POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:rand_search>)
+
+# -------------------
+
 
 #################### class_5 ####################
