@@ -9,7 +9,8 @@ volatile int running_threads = 0;
 pthread_mutex_t running_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void *print_hello(void *hello_arg);
-int new_hello_th(int th_id, pthread_t* thread);
+
+int new_hello_th(int th_id, pthread_t *thread);
 
 struct hello_arg
 {
@@ -47,12 +48,14 @@ int main(int argc, char *argv[])
 
     pthread_join(*thread, NULL);
     free(thread);
+    pthread_mutex_destroy(&running_mutex);
     return 0;
 
     cleanup:
-        if (thread != NULL) {
-            free(thread);
-        }
+    if (thread != NULL) {
+        free(thread);
+    }
+    pthread_mutex_destroy(&running_mutex);
     return 1;
 }
 
@@ -68,7 +71,7 @@ int new_hello_th(int th_id, pthread_t *thread)
     }
     arg->arg = th_id;
 
-    int rc = pthread_create(thread, NULL, print_hello, (void*)arg);
+    int rc = pthread_create(thread, NULL, print_hello, (void *) arg);
     if (rc) {
         printf("Return code: %d\n", rc);
         return rc;
@@ -81,7 +84,7 @@ void *print_hello(void *hello_arg)
 {
     sleep(1);
 
-    struct hello_arg *arg = (struct hello_arg*) hello_arg;
+    struct hello_arg *arg = (struct hello_arg *) hello_arg;
     printf("Next boring 'Hello World!' version! Thread Number: %d\n", arg->arg);
 
     pthread_mutex_lock(&running_mutex);

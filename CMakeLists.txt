@@ -53,5 +53,17 @@ add_custom_command(
 
 # -------------------
 
+add_executable(synch class_5/synchronization/synch.c)
+
+add_custom_command(
+        TARGET synch POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:synch> ${PROJECT_SOURCE_DIR}/Debug/class_5)
+
+add_custom_command(
+        TARGET synch POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:synch>)
+
+# -------------------
+
 
 #################### class_5 ####################
