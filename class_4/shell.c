@@ -188,7 +188,10 @@ int executecmds(struct cmdlist *__head)
                 printf("Fork error: %s", strerror(e));
                 return RESERROR;
             default:
-                waitpid(pid, &forked_term_status, 0);
+                if (waitpid(pid, &forked_term_status, 0) == -1) {
+                    e = errno;
+                    printf("Waitpid error: %s", strerror(e));
+                }
                 printf("Process termination status: %d\n", forked_term_status);
                 if (WIFSIGNALED(forked_term_status)) {
                     printf("Child process terminated abnormally.");
