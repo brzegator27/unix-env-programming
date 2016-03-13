@@ -4,6 +4,32 @@ project(unix_env_programming)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -pthread")
 
+#################### class_1 ####################
+
+add_executable(manage_err class_1/managing_err/manage_err.c class_1/managing_err/t.c)
+
+add_custom_command(
+        TARGET manage_err POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:manage_err> ${PROJECT_SOURCE_DIR}/Debug/class_1)
+
+add_custom_command(
+        TARGET manage_err POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:manage_err>)
+
+# -------------------
+
+add_executable(sys_conf class_1/sys_conf/sys_conf_generated.c)
+
+add_custom_command(
+        TARGET sys_conf POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:sys_conf> ${PROJECT_SOURCE_DIR}/Debug/class_1)
+
+add_custom_command(
+        TARGET sys_conf POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:sys_conf>)
+
+#################### class_1 ####################
+
 add_executable(copy1 class_2/copy1.c)
 add_executable(cat1 class_2/cat1.c)
 add_executable(backward class_2/backward.c)
