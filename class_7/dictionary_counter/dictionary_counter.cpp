@@ -71,8 +71,7 @@ void manage_child_counting_lines(int read_from,
                                  int write_to)
 {
     unsigned int number_of_lines = 0;
-    char buf[1],
-            number_of_lines_str[10];
+    char buf[1];
 
     while (read(read_from, buf, sizeof(buf)) > 0) {
         if ('\n' == buf[0]) {
@@ -80,8 +79,7 @@ void manage_child_counting_lines(int read_from,
         }
     }
 
-    snprintf(number_of_lines_str, sizeof(number_of_lines_str), "%d", number_of_lines);
-    write(write_to, number_of_lines_str, sizeof(number_of_lines_str));
+    write(write_to, &number_of_lines, sizeof(number_of_lines));
 
     close(read_from);
     close(write_to);
@@ -91,8 +89,7 @@ void manage_child_counting_words_with_pipe(int read_from,
                                            int write_to)
 {
     unsigned int words_with_pipe_word = 0;
-    char buf[1], word[1024], pipe_word[] = "pipe",
-            words_with_pipe_word_str[10];
+    char buf[1], word[1024], pipe_word[] = "pipe";
     int char_pos = 0;
 
     while (read(read_from, buf, sizeof(buf)) > 0) {
@@ -111,8 +108,7 @@ void manage_child_counting_words_with_pipe(int read_from,
         }
     }
 
-    snprintf(words_with_pipe_word_str, sizeof(words_with_pipe_word_str), "%d", words_with_pipe_word);
-    write(write_to, words_with_pipe_word_str, sizeof(words_with_pipe_word_str));
+    write(write_to, &words_with_pipe_word, sizeof(words_with_pipe_word));
 
     close(read_from);
     close(write_to);
@@ -125,9 +121,9 @@ void manage_parent_process(int pid_count_lines,
                            int count_words_with_pipe_read_from,
                            int count_words_with_pipe_write_to)
 {
+    unsigned int number_of_lines, words_with_pipe_word;
     int wait_pid_status, fd_dictionary;
-    char buf[514],
-            number_of_lines_str[10], words_with_pipe_word_str[10];
+    char buf[514];
     ssize_t nread = 0;
 
     if ((fd_dictionary = open("dictionary.txt", O_RDONLY)) == -1) {
@@ -154,11 +150,11 @@ void manage_parent_process(int pid_count_lines,
     waitpid(pid_count_lines, &wait_pid_status, 0);
     waitpid(pid_count_words_with_pipe, &wait_pid_status, 0);
 
-    read(count_lines_read_from, number_of_lines_str, sizeof(number_of_lines_str));
-    read(count_words_with_pipe_read_from, words_with_pipe_word_str, sizeof(words_with_pipe_word_str));
+    read(count_lines_read_from, &number_of_lines, sizeof(number_of_lines));
+    read(count_words_with_pipe_read_from, &words_with_pipe_word, sizeof(words_with_pipe_word));
 
-    printf("lines no.: %s\n", number_of_lines_str);
-    printf("Words with \"pipe\" word: %s\n", words_with_pipe_word_str);
+    printf("lines no.: %d\n", number_of_lines);
+    printf("Words with \"pipe\" word: %d\n", words_with_pipe_word);
 
     close(count_lines_read_from);
     close(count_words_with_pipe_read_from);
