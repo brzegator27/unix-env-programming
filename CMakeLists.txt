@@ -163,9 +163,23 @@ add_custom_command(
         TARGET dictionary_counter POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:dictionary_counter> ${PROJECT_SOURCE_DIR}/Debug/class_7)
 
+add_custom_command(
+        TARGET dictionary_counter POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:dictionary_counter>)
+
+# -------------------
+
+set(DATA_PASSER_SOURCE_FILES class_7/data_passer/data_passer.cpp
+        class_7/data_passer/data_passer.h)
+add_executable(data_passer ${DATA_PASSER_SOURCE_FILES})
+
+add_custom_command(
+        TARGET data_passer POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:data_passer> ${PROJECT_SOURCE_DIR}/Debug/class_7)
+
 #add_custom_command(
-#        TARGET dictionary_counter POST_BUILD
-#        COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:dictionary_counter>)
+#        TARGET data_passer POST_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:data_passer>)
 
 # -------------------
 

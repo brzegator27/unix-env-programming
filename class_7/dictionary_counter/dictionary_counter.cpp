@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
         close(pfd_count_lines_in[1]);
         close(pfd_count_lines_out[0]);
 
-        manage_child_counting_lines(pfd_count_lines_in[0], pfd_count_lines_out[1]);
+        manage_seq(pfd_count_lines_in[0], pfd_count_lines_out[1]);
         return 0;
     }
 
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
         close(pfd_count_words_with_pipe_in[1]);
         close(pfd_count_words_with_pipe_out[0]);
 
-        manage_child_counting_words_with_pipe(pfd_count_words_with_pipe_in[0], pfd_count_words_with_pipe_out[1]);
+        manage_multiplier(pfd_count_words_with_pipe_in[0], pfd_count_words_with_pipe_out[1]);
         return 0;
     }
 
@@ -67,8 +67,8 @@ int main(int argc, char *argv[])
     return 1;
 }
 
-void manage_child_counting_lines(int read_from,
-                                 int write_to)
+void manage_seq(int read_from,
+                int write_to)
 {
     unsigned int number_of_lines = 0;
     char buf[1];
@@ -85,8 +85,8 @@ void manage_child_counting_lines(int read_from,
     close(write_to);
 }
 
-void manage_child_counting_words_with_pipe(int read_from,
-                                           int write_to)
+void manage_multiplier(int read_from,
+                       int write_to)
 {
     unsigned int words_with_pipe_word = 0;
     char buf[1], word[1024], pipe_word[] = "pipe";

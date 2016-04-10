@@ -1,11 +1,11 @@
 #ifndef UNIX_ENV_PROGRAMMING_DICTIONARY_COUNTER_H
 #define UNIX_ENV_PROGRAMMING_DICTIONARY_COUNTER_H
 
-void manage_child_counting_lines(int read_from,
-                                 int write_to);
+void manage_seq(int read_from,
+                int write_to);
 
-void manage_child_counting_words_with_pipe(int read_from,
-                                           int write_to);
+void manage_multiplier(int read_from,
+                       int write_to);
 
 void manage_parent_process(int pid_count_lines,
                            int pid_count_words_with_pipe,
