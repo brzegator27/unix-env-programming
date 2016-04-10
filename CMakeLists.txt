@@ -127,3 +127,48 @@ add_custom_command(
 
 
 #################### class_5 ####################
+
+
+#################### class_7 ####################
+
+add_executable(simple_pipe class_7/simple_pipe/simple_pipe.cpp)
+
+add_custom_command(
+        TARGET simple_pipe POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:simple_pipe> ${PROJECT_SOURCE_DIR}/Debug/class_7)
+
+add_custom_command(
+        TARGET simple_pipe POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:simple_pipe>)
+
+# -------------------
+
+add_executable(pipe_and_dup class_7/pipe_and_dup/pipe_and_dup.cpp)
+
+add_custom_command(
+        TARGET pipe_and_dup POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:pipe_and_dup> ${PROJECT_SOURCE_DIR}/Debug/class_7)
+
+add_custom_command(
+        TARGET pipe_and_dup POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:pipe_and_dup>)
+
+# -------------------
+
+set(DICTIONARY_COUNTER_SOURCE_FILES class_7/dictionary_counter/dictionary_counter.cpp
+        class_7/dictionary_counter/dictionary_counter.h)
+add_executable(dictionary_counter ${DICTIONARY_COUNTER_SOURCE_FILES})
+
+add_custom_command(
+        TARGET dictionary_counter POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:dictionary_counter> ${PROJECT_SOURCE_DIR}/Debug/class_7)
+
+#add_custom_command(
+#        TARGET dictionary_counter POST_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:dictionary_counter>)
+
+# -------------------
+
+
+
+#################### class_7 ####################
