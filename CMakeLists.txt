@@ -177,6 +177,20 @@ add_custom_command(
         TARGET data_passer POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:data_passer> ${PROJECT_SOURCE_DIR}/Debug/class_7)
 
+add_custom_command(
+        TARGET data_passer POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:data_passer>)
+
+# -------------------
+
+set(DATA_PASSER_SOURCE_FILES class_7/i_want_more_pipes/i_said_more_pipes.cpp
+        class_7/i_want_more_pipes/i_said_more_pipes.h)
+add_executable(i_said_more_pipes ${DATA_PASSER_SOURCE_FILES})
+
+add_custom_command(
+        TARGET i_said_more_pipes POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:i_said_more_pipes> ${PROJECT_SOURCE_DIR}/Debug/class_7)
+
 #add_custom_command(
 #        TARGET data_passer POST_BUILD
 #        COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:data_passer>)
