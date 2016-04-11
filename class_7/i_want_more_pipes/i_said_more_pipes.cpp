@@ -20,7 +20,7 @@ void manage_more_pipes()
 {
     int pfd_current[2], pfd_previous[2];
     pid_t previous_program_pid = -1;
-    int e;
+    int e, wait_pid_status;
 
     pfd_previous[0] = -1;
     pfd_previous[1] = -1;
@@ -40,6 +40,8 @@ void manage_more_pipes()
             fprintf(stderr, "Error while creating pipe; error: %s\n", strerror(e));
             return;
         }
+//        fprintf(stderr, "Cur no: %d %d\n", pfd_current[0], pfd_current[1]);
+//        fprintf(stderr, "Pre no: %d %d\n", pfd_previous[0], pfd_previous[1]);
         previous_program_pid = run_proper_program(program_no,
                                                   previous_program_pid,
                                                   pfd_previous[0],
@@ -57,6 +59,8 @@ void manage_more_pipes()
         pfd_previous[0] = pfd_current[0];
         pfd_previous[1] = pfd_current[1];
     }
+
+    waitpid(previous_program_pid, &wait_pid_status, 0);
 }
 
 pid_t run_proper_program(short program_no,

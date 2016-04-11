@@ -1,7 +1,7 @@
 #ifndef UNIX_ENV_PROGRAMMING_I_WANT_MORE_PIPES_H
 #define UNIX_ENV_PROGRAMMING_I_WANT_MORE_PIPES_H
 
-#define PROGRAMS_NUMBER 3
+#define PROGRAMS_NUMBER 5
 
 void manage_more_pipes();
 
